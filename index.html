@@ -353,6 +353,159 @@
   </div>
 </div>
   </section>
+    <!-- SCRIPT: behavior (replace in-place; this is the only script needed) -->
+<script>
+  (function () {
+    // Elements
+    const cards = Array.from(document.querySelectorAll('#twv-testimonials .twv-card'));
+    const previews = Array.from(document.querySelectorAll('#twv-testimonials .twv-preview'));
+    const openButtons = Array.from(document.querySelectorAll('#twv-testimonials .twv-open-btn'));
+    const modal = document.getElementById('twv-modal');
+    const modalInner = document.getElementById('twv-modal-inner');
+    const modalVideo = document.getElementById('twv-modal-video');
+    const closeBtn = document.getElementById('twv-close');
+    let modalOpen = false;
+
+    // Responsive: autoplay previews only on desktop width (>= 768px)
+    const isDesktop = () => window.innerWidth >= 768;
+
+    // IntersectionObserver: autoplay muted previews when visible (desktop)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target.querySelector('.twv-preview');
+        if (!video) return;
+        if (entry.isIntersecting && isDesktop() && !modalOpen) {
+          // play muted preview
+          video.muted = true;
+          const p = video.play();
+          if (p && p.catch) p.catch(() => {/* autoplay might fail on some browsers; ignore */});
+        } else {
+          // pause preview when not visible or if modal open
+          try { video.pause(); video.currentTime = 0; } catch(e) {}
+        }
+      });
+    }, { threshold: 0.55 });
+
+    cards.forEach(card => io.observe(card));
+
+    // Helper: open modal for a given card
+    function openModalForCard(card) {
+      const vid = card.querySelector('.twv-preview');
+      if (!vid) return;
+      const src = vid.currentSrc || vid.getAttribute('src');
+      const poster = vid.getAttribute('poster') || '';
+
+      // Pause all previews
+      previews.forEach(v => { try { v.pause(); } catch(e) {} });
+
+      // Setup modal
+      modalVideo.src = src || '';
+      modalVideo.poster = poster;
+      modalVideo.muted = false;
+      modalVideo.controls = true;
+
+      // Show modal
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      modalOpen = true;
+
+      // Try to play unmuted (user click opened modal so should be allowed)
+      const p = modalVideo.play();
+      if (p && p.catch) {
+        p.catch((err) => {
+          // if autoplay blocked with sound, fallback to muted and show controls (user can unmute)
+          console.warn('play() failed — falling back to muted autoplay', err);
+          modalVideo.muted = true;
+          modalVideo.play().catch(()=>{});
+        });
+      }
+    }
+
+    // Close modal
+    function closeModal() {
+      modalOpen = false;
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      try { modalVideo.pause(); } catch(e) {}
+      modalVideo.src = '';
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      // Resume any preview in view (desktop only)
+      setTimeout(() => {
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const inView = rect.top < window.innerHeight && rect.bottom > 0;
+          if (inView && isDesktop()) {
+            const v = card.querySelector('.twv-preview');
+            if (v) {
+              v.muted = true;
+              v.play().catch(()=>{});
+            }
+          }
+        });
+      }, 120);
+    }
+
+    // Click handlers: open modal when clicking the overlay button or card
+    openButtons.forEach((btn, idx) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openModalForCard(cards[idx]);
+      });
+    });
+    // Also open when clicking anywhere on the card (but not on native controls)
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        // if clicked a child that is a video control, ignore
+        if (e.target && (e.target.tagName === 'BUTTON' || e.target.tagName === 'A' || e.target.tagName === 'INPUT')) return;
+        openModalForCard(card);
+      });
+    });
+
+    // Close modal by clicking outside inner or pressing ESC
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    closeBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOpen) closeModal();
+    });
+
+    // Handle resize: pause previews during mobile <-> desktop changes
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        // if leaving desktop, pause all previews
+        if (!isDesktop()) {
+          previews.forEach(v => { try { v.pause(); } catch(e) {} });
+        } else {
+          // resume any preview in view
+          cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+            const v = card.querySelector('.twv-preview');
+            if (v && inView && !modalOpen) {
+              v.muted = true;
+              v.play().catch(()=>{});
+            }
+          });
+        }
+      }, 140);
+    });
+
+    // Accessibility: prevent tab-focus trap by focusing close button when modal opens
+    // (optional enhancement)
+    const obsModal = new MutationObserver(() => {
+      if (modal.style.display !== 'none') {
+        try { closeBtn.focus(); } catch(e) {}
+      }
+    });
+    obsModal.observe(modal, { attributes: true, attributeFilter: ['style'] });
+  })();
+</script>
 
     <!-- CTA Section -->
     <section class="cta-section">
