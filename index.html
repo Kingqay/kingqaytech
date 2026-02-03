@@ -342,6 +342,87 @@
         </div>
     </footer>
 
+    <section id="twv-testimonials" aria-label="Client video testimonials" style="--accent:#00c4a7; --accent2:#0077ff; padding:48px 16px; max-width:1200px; margin:0 auto;">
+  <h2 style="text-align:center; font-family:Inter,system-ui,Arial, sans-serif; font-size:1.9rem; margin-bottom:8px;">Client Video Testimonials</h2>
+  <p style="text-align:center; color:#475569; margin-bottom:22px; max-width:760px; margin-left:auto; margin-right:auto;">
+  </p>
+
+  <!-- GRID -->
+  <div class="twv-grid" style="display:grid; gap:18px; grid-template-columns:repeat(3,1fr);">
+    <!-- CARD 1 -->
+    <article class="twv-card" data-index="1" style="position:relative; cursor:pointer; border-radius:12px; overflow:hidden; box-shadow:0 12px 30px rgba(2,6,23,.08);">
+      <video class="twv-preview"
+             src="https://raw.githubusercontent.com/Learnwithsolly/Learnwithsolly/fd9a5b505a5fe58b860cddcd607b61a4b7d124e3/%23ShopifyWebDesign%23EcommerceWebsiteDesign%23ShopifyExpert%23WebsiteDesignShopify%23ShopifyDesignService.mp4"
+             poster="PUT_POSTER_URL_HERE_1.jpg"
+             playsinline muted loop preload="metadata"
+             style="width:100%; height:240px; object-fit:cover; display:block;">
+      </video>
+      <button class="twv-open-btn" aria-label="Open testimonial 1" style="position:absolute; inset:0; display:grid; place-items:center; background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.12)); border:0; color:white; font-size:0; transition:transform .18s;">
+        <svg width="74" height="74" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 6px 18px rgba(2,6,23,.25));">
+          <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,.45)"/>
+          <path d="M10 8l6 4-6 4V8z" fill="white"/>
+        </svg>
+      </button>
+      <div style="padding:12px 14px; background:white;">
+        <strong style="display:block; font-size:1rem;"></strong>
+        <span style="display:block; color:#475569; font-size:.9rem; margin-top:6px;"></span>
+      </div>
+    </article>
+
+    <!-- CARD 2 -->
+    <article class="twv-card" data-index="2" style="position:relative; cursor:pointer; border-radius:12px; overflow:hidden; box-shadow:0 12px 30px rgba(2,6,23,.08);">
+      <video class="twv-preview"
+             src="https://raw.githubusercontent.com/Learnwithsolly/Learnwithsolly/fd9a5b505a5fe58b860cddcd607b61a4b7d124e3/Another%20one.%20This%20could%20be%20you%20too.Dm%20to%20get%20started.-%20%23dropshipping101-%20%23dropshipbasics-%20%23drops.mp4"
+             poster="PUT_POSTER_URL_HERE_2.jpg"
+             playsinline muted loop preload="metadata"
+             style="width:100%; height:240px; object-fit:cover; display:block;">
+      </video>
+      <button class="twv-open-btn" aria-label="Open testimonial 2" style="position:absolute; inset:0; display:grid; place-items:center; background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.12)); border:0; color:white; font-size:0; transition:transform .18s;">
+        <svg width="74" height="74" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 6px 18px rgba(2,6,23,.25));">
+          <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,.45)"/>
+          <path d="M10 8l6 4-6 4V8z" fill="white"/>
+        </svg>
+      </button>
+      <div style="padding:12px 14px; background:white;">
+        <strong style="display:block; font-size:1rem;">Angela</strong>
+        <span style="display:block; color:#475569; font-size:.9rem; margin-top:6px;"></span>
+      </div>
+    </article>
+
+    <!-- CARD 3 -->
+    <article class="twv-card" data-index="3" style="position:relative; cursor:pointer; border-radius:12px; overflow:hidden; box-shadow:0 12px 30px rgba(2,6,23,.08);">
+      <video class="twv-preview"
+             src="https://raw.githubusercontent.com/Learnwithsolly/Learnwithsolly/fd9a5b505a5fe58b860cddcd607b61a4b7d124e3/Learnwithsolly%20Boom!%20DENISE%20gave%20her%20Testimony..mp4"
+             poster="PUT_POSTER_URL_HERE_3.jpg"
+             playsinline muted loop preload="metadata"
+             style="width:100%; height:240px; object-fit:cover; display:block;">
+      </video>
+      <button class="twv-open-btn" aria-label="Open testimonial 3" style="position:absolute; inset:0; display:grid; place-items:center; background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.12)); border:0; color:white; font-size:0; transition:transform .18s;">
+        <svg width="74" height="74" viewBox="0 0 24 24" fill="none" style="filter:drop-shadow(0 6px 18px rgba(2,6,23,.25));">
+          <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,.45)"/>
+          <path d="M10 8l6 4-6 4V8z" fill="white"/>
+        </svg>
+      </button>
+      <div style="padding:12px 14px; background:white;">
+        <strong style="display:block; font-size:1rem;">Denise</strong>
+        <span style="display:block; color:#475569; font-size:.9rem; margin-top:6px;"></span>
+      </div>
+    </article>
+  </div>
+
+  <!-- MODAL (hidden by default) -->
+<div id="twv-modal" aria-hidden="true" style="display:none; position:fixed; inset:0; z-index:1200; align-items:center; justify-content:center; background:rgba(2,6,23,.72); padding:24px;">
+  <div id="twv-modal-inner" role="dialog" aria-modal="true" style="width:100%; max-width:1100px; max-height:90vh; border-radius:12px; overflow:hidden; background:#000; position:relative; display:flex; align-items:center; justify-content:center;">
+    <button id="twv-close" aria-label="Close video" style="position:absolute; right:12px; top:12px; z-index:5; background:rgba(255,255,255,0.08); border:0; color:white; padding:8px 10px; border-radius:8px; font-size:1rem;">✕</button>
+    
+    <!-- FIXED VIDEO STYLE -->
+    <video id="twv-modal-video" controls playsinline
+      style="max-width:90vw; max-height:90vh; width:auto; height:auto; display:block; margin:auto; background:#000; object-fit:contain;">
+    </video>
+  </div>
+</div>
+  </section>
+
     <!-- Sticky CTA -->
     <div class="sticky-cta" id="stickyCta">
         <a href="pages/contact.html" class="btn btn-primary">Book Free Call</a>
